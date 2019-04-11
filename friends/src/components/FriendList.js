@@ -7,11 +7,17 @@ function FriendList(props) {
     props.history.push('/')
   }
 
+  function routeToFriend(event, friend) {
+    event.preventDefault();
+    props.history.push(`/item-list/${friend.id}`)
+  }
+
   return(
-    <div className='friend-list-wrapper'>
+    <div className='friend-list-container'>
       {props.friends.map(friend => (
         <div 
-          className='friend-wrap'
+          onClick={event => routeToFriend(event, friend)}
+          className='friend-card'
           key={friend.id}
         >
 
