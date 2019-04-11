@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom'
 
 import axios from 'axios'
 
 import FriendList from './components/FriendList'
 import Home from './components/Home'
+import FriendForm from './components/FriendForm'
 
 import './App.css';
 
@@ -25,17 +26,43 @@ export default class App extends Component {
     .catch(err => console.log(err))
   }
 
+  addItem = item => {
+    axios
+      .post('http://localhost:5000/friends', item)
+      .then(res => this.setState({ items: res.data }))
+      .catch(err => console.log(err))
+  }
+
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
+
+          <nav>
+            <h1 className='friends-header'>BFFEMF</h1>
+            <div className='nav-links'>
+              <NavLink exact to='/'>Home</NavLink>
+              <NavLink to='/friend-list'>Friends</NavLink>
+              <NavLink to='/friend-form'>Add Friends</NavLink>
+            </div>
+          </nav>
         
           <Route exact path='/' component={Home} />
 
           <Route 
-            path='/friends' 
-            render={props => <FriendList {...props} friends={this.state.friends}/>} 
+            path='/friend-list' 
+            render={props => (<FriendList {...props} friends={this.state.friends}/>)} 
+          />
+
+          <Route 
+            path='/friend-form'
+            render={props => (
+              <FriendForm 
+              {...props}
+                addItem={this.addItem}
+              />
+            )} 
           />
 
           
@@ -45,6 +72,3 @@ export default class App extends Component {
   }
 }
 
-{/* <Route 
-            path='/friends' 
-            render={(props) => <Friends {...props} friends={this.state.friends} />} /> */}

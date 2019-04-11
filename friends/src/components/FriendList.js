@@ -10,10 +10,15 @@ function FriendList(props) {
   return(
     <div className='friend-list-wrapper'>
       {props.friends.map(friend => (
-        <div className='friend-wrap'>
-        <h1>{friend.name}</h1>
-        <h2>Age: {friend.age}</h2>
-        <h3>email: {friend.email}</h3>
+        <div 
+          className='friend-wrap'
+          key={friend.id}
+        >
+
+
+          <h1>{friend.name}</h1>
+          <h2>Age: {friend.age}</h2>
+          <h3>email: {friend.email}</h3>
         
         </div>
       ))}
