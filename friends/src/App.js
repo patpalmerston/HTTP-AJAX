@@ -15,7 +15,8 @@ export default class App extends Component {
   constructor() {
     super();
     this.state ={
-      friends: []
+      friends: [],
+      currentFriend: null
     }
   }
 
@@ -30,22 +31,41 @@ export default class App extends Component {
     .catch(err => console.log(err))
   }
 
-  addItem = item => {
+  addFriend = friend => {
     axios
-      .post('http://localhost:5000/friends', item)
+      .post('http://localhost:5000/friends', friend)
       .then(res => this.setState({ friends: res.data }))
       .catch(err => console.log(err))
   }
 
-  // updateItem = (id, itemUpdated) => {
-  //   axios
-  //     .put(`http://localhost:5000/friends/${id}`, itemUpdated)
-  //     .then(res => {
-  //       this.setState({ friends: res.data });
-  //       this.props.history.push('/friend-list');
-  //     })
-  //     .catch(err => console.log(err))
-  // }
+  deleteFriend = (id, history) => {
+    axios
+      .delete(`http://localhost:5000/friends/${id}`)
+      .then(res => {
+        this.setState({ friends: res.data });
+        history.push('/friend-list');
+      })
+      .catch(err => console.log(err))
+  }
+
+
+
+// I have an extra paramater.. check follow along
+  updateFriend = (id, item) => {
+    axios
+      .put(`http://localhost:5000/friends/${id}`, item)
+      .then(res => {
+        this.setState({ friends: res.data, currentFriend: null });
+        this.props.history.push('/friend-list');
+      })
+      .catch(err => console.log(err))
+  }
+
+  setupUpdate = (friend, history)=> {
+    // this.setState({ currentFriend: friend });
+
+    history.push(`/friend-form/${friend.id}`);
+  }
 
 
   render() {
@@ -54,17 +74,18 @@ export default class App extends Component {
         <header className="App-header">
 
           <nav>
-            <h1 className='friends-header'>BFFEMF</h1>
+            <h1 className='friends-header'>Best Freinds</h1>
             <div className='nav-links'>
               <NavLink exact to='/'>Home</NavLink>
               <NavLink to='/friend-list'>Friends</NavLink>
-              <NavLink to='/friend-form'>Add Friends</NavLink>
+              <NavLink to='/friend-form/1'>Add Friends</NavLink>
             </div>
           </nav>
         
           <Route exact path='/' component={Home} />
 
           <Route 
+            exact
             path='/friend-list' 
             render={props => (
                 <FriendList 
@@ -79,18 +100,21 @@ export default class App extends Component {
             render={props => (
               <Friend 
                 {...props} 
-                friends={this.state.friends} 
+                friends={this.state.friends}
+                setupUpdate={this.setupUpdate} 
+                deleteFriend={this.deleteFriend}
               />
             )} 
           />
 
           <Route 
-            path='/friend-form'
+            path='/friend-form/:id'
             render={props => (
               <FriendForm 
               {...props}
-                // updateItem={this.updateItem}
-                addItem={this.addItem}
+                updateFriend={this.updateFriend}
+                addFriend={this.addFriend}
+                friends={this.state.friends}
               />
             )} 
           />

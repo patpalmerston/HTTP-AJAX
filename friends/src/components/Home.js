@@ -15,7 +15,7 @@ function Home(props) {
 
   const friendHandler = event => {
     event.preventDefault();
-    props.history.push('/friends')
+    props.history.push('/friend-list')
   }
 
   return(

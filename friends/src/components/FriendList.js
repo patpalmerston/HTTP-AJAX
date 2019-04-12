@@ -9,7 +9,7 @@ function FriendList(props) {
 
   function routeToFriend(event, friend) {
     event.preventDefault();
-    props.history.push(`/item-list/${friend.id}`)
+    props.history.push(`/friend-list/${friend.id}`)
   }
 
   return(

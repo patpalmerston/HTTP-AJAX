@@ -12,6 +12,17 @@ export default class FriendForm extends React.Component {
 
     }
 
+    componentDidMount() {
+      
+      const friendstuff = this.props.friends.find(friend => friend.id === Number(this.props.match.params.id))
+      this.setState({
+            name: friendstuff.name,
+            age: friendstuff.age,
+            email: friendstuff.email
+          })
+      console.log(friendstuff)
+    }
+
     handleChange = e => {
       this.setState({
         [e.target.name]: e.target.value
@@ -21,8 +32,19 @@ export default class FriendForm extends React.Component {
    
     handleSubmit = e => {
       e.preventDefault();
+          //this should be addFriend but vsCode acting wierd
+      if (!this.props.currentFriend) {
+      this.props.addFriend({ 
+        ...this.state 
+        })
+      }
 
-      this.props.addItem({ ...this.state })
+      else {
+        this.props.updateFriend({
+          ...this.state,
+          id: this.props.currentFriend.id
+        })
+      }
 
       this.setState({
         name: '',
@@ -56,7 +78,7 @@ export default class FriendForm extends React.Component {
             onChange={this.handleChange}
             placeholder='email'
           />
-          <button>Add Friend</button>
+          <button>submit</button>
         </form>
       )
     }
