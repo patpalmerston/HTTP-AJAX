@@ -1,0 +1,51 @@
+.App {
+  text-align: center;
+  background-color: grey;
+  
+}
+
+.home-wrapper {
+  
+  max-width: 100%;
+  max-height: 100%;
+  background-img: url('https://images.pexels.com/photos/708440/pexels-photo-708440.jpeg?auto=compress&cs=tinysrgb&h=650&w=940');
+}
+
+.friend-list-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 10px;
+}
+
+.friend-wrap {
+  border: 2px solid darkblue;
+  width: 32%;
+  color: lightgoldenrodyellow;
+  margin: 2px;
+  border-radius: 10%;
+}
+
+.friend-button {
+  margin: 1rem;
+  width: 200px;
+  height: 30px;
+  border-radius: 20%;
+  font-size: 1rem;
+  color: white;
+  background-color: lightskyblue;
+  border: black;
+}
+
+.Home-button {
+  margin: 1rem;
+  width: 200px;
+  border-radius: 50%;
+  height: 100px;
+  font-size: 2rem;
+  color: black;
+  background-color: rgba(251, 255, 251, .6);
+  border: 2px solid white;
+}
+
